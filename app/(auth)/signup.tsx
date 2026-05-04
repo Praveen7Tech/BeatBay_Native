@@ -2,18 +2,16 @@ import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { styled } from "nativewind";
 import {
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    Pressable,
-    Text,
-    TextInput,
-    View,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  Pressable,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
 
-import {
-    SafeAreaView as RNSafeAreaView,
-} from "react-native-safe-area-context";
+import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 
 import { icons } from "../constants/icons";
 
@@ -35,7 +33,7 @@ export default function SignUp() {
               <Ionicons name="arrow-back" size={26} color="white" />
             </Pressable>
 
-            <Text className="text-white font-sans-bold text-xl">
+            <Text className="text-white font-sans-bold text-xl pl-3">
               Sign up to start listening
             </Text>
           </View>

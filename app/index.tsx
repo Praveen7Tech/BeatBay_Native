@@ -32,6 +32,10 @@ export default function Index() {
                 <Pressable onPress={()=> router.push('/login')} className="w-full rounded-full border border-inputborder items-center py-4">
                     <Text className="text-white font-sans-bold">Log In</Text>
                 </Pressable>
+
+                <Pressable onPress={()=> router.push('/(auth)/verifyotp')} className="w-full rounded-full border border-inputborder items-center py-4">
+                    <Text className="text-white font-sans-bold">verify otp</Text>
+                </Pressable>
             </View>
 
          </View>
