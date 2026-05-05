@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as SecureStore from 'expo-secure-store';
+import { useAuthStore } from "../store/useAuthStore";
 
 export const api = axios.create({
     baseURL: 'http://192.168.1.38:5000',
@@ -11,7 +12,7 @@ export const api = axios.create({
 
 
 api.interceptors.request.use(async(config)=>{
-    const accessToken = await SecureStore.getItemAsync("accessToken")
+    const accessToken = useAuthStore((state)=> state.accessToken)
     if(accessToken){
         config.headers.Authorization = `Bearer ${accessToken}`
     }
@@ -25,7 +26,7 @@ api.interceptors.response.use((response)=> response,
         const originalRequest = error.config;
         console.log("error response : ", originalRequest.url)
 
-        if(error.response.status === 401 && !originalRequest._retry){
+        if(error.response?.status === 401 && !originalRequest._retry){
            if(originalRequest.url.includes('/user/auth-status')){
             console.log("refresh api again called need to logout")
             return Promise.reject(error)
@@ -35,7 +36,7 @@ api.interceptors.response.use((response)=> response,
 
            try {
                 const currentRefreshToken = await SecureStore.getItemAsync("refreshToken")
-                const response =  await axios.get('/user/auth-status',{currentRefreshToken})
+                const response =  await axios.post('/user/auth-status',{currentRefreshToken})
                 const {accessToken, refreshToken} = response.data;
 
                 if(response.data){
@@ -53,6 +54,8 @@ api.interceptors.response.use((response)=> response,
                 console.log("Error in api response logout",error)
                 return Promise.reject(error)
            }
+           
         }
+        return Promise.reject(error)
     }
 )
