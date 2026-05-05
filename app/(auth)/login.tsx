@@ -4,10 +4,20 @@ import { styled } from "nativewind";
 import { Image, KeyboardAvoidingView, Platform, Pressable, Text, TextInput, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 import { icons } from "../constants/icons";
+import { useLogin } from "../hooks/useAuth";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
 export default function Login(){
+    let email = "praveenmelethil007@gmail.com"
+    let password = "Praveen1"
+
+    const {mutate, isPending} = useLogin()
+    const HandleLogin = ()=>{
+      console.log("login start")
+      mutate({email,password})
+    }
+    
     return(
        <SafeAreaView className="flex-1 bg-background">
       <KeyboardAvoidingView
@@ -54,9 +64,9 @@ export default function Login(){
               />
             </View>
 
-            <Pressable className="bg-primary rounded-full items-center py-4 mt-6">
+            <Pressable onPress={HandleLogin} className="bg-primary rounded-full items-center py-4 mt-6">
               <Text className="text-black font-sans-bold text-base">
-                Continue
+                {isPending ? "Loading.." : "Continue"}
               </Text>
             </Pressable>
 

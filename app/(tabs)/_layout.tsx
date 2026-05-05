@@ -8,7 +8,7 @@ export default function HomeLayout(){
             tabBarActiveTintColor: "#FFFFFF",
             tabBarInactiveTintColor:"#B3B3B3",
             tabBarStyle:{
-                backgroundColor: "rgba(0, 0, 0, 0.85",
+                backgroundColor: "rgba(0, 0, 0, 0.85)",
                 position: "absolute", //allow content to scroll behind bar
                 borderTopWidth:0,
                 elevation:0,

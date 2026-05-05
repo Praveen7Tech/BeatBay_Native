@@ -44,7 +44,7 @@ const VerifyOtp = () => {
           Enter verification code
         </Text>
         <Text className='text-gray-400 font-sans-light text-center'>
-          We sent a 6-digit code to your email.
+          We sent a 4-digit code to your email.
         </Text>      
       </View>
 
