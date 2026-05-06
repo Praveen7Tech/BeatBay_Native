@@ -1,5 +1,4 @@
 import { router } from "expo-router";
-import * as SecureStore from "expo-secure-store";
 import { styled } from "nativewind";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
@@ -10,13 +9,11 @@ import { useAuthStore } from "../store/useAuthStore";
 const SafeAreaView = styled(RNSafeAreaView);
 
 const Home = () => {
+  const LogOut =  useAuthStore((state)=> state.logout)
 
   const HnaldeLogout = async()=>{
     try {
-      //await SecureStore.deleteItemAsync("accessToken")
-      await SecureStore.deleteItemAsync("refreshToken")
-
-      useAuthStore.getState().logout();
+      LogOut()
 
       router.replace("/")
 

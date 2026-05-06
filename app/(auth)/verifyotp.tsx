@@ -1,14 +1,29 @@
+import { useLocalSearchParams } from 'expo-router';
 import { styled } from 'nativewind';
 import React, { useEffect, useRef, useState } from 'react';
-import { NativeSyntheticEvent, Pressable, Text, TextInput, TextInputKeyPressEventData, TouchableOpacity, View } from 'react-native';
+import {
+  ActivityIndicator,
+  NativeSyntheticEvent,
+  Pressable,
+  Text,
+  TextInput,
+  TextInputKeyPressEventData,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
+import { useVerifyOtp } from '../hooks/useAuth'; // Ensure this path is correct
+
 const SafeAreaView = styled(RNSafeAreaView);
 
 const VerifyOtp = () => {
+  const { email } = useLocalSearchParams<{ email: string }>()
   const [otp, setOtp] = useState<string[]>(new Array(4).fill(""));
   const [timer, setTimer] = useState<number>(30);
+  const [serverError, setServerError] = useState<string | null>(null); // State for backend errors
   
   const inputs = useRef<(TextInput | null)[]>([]);
+  const { mutate, isPending } = useVerifyOtp(); // Initialize mutation hook
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -18,10 +33,11 @@ const VerifyOtp = () => {
   }, []);
 
   const handleChange = (text: string, index: number) => {
+    setServerError(null); // Clear error when user types
     const newOtp = [...otp];
     newOtp[index] = text.slice(-1);
     setOtp(newOtp);
-    // Auto-focus logic
+    
     if (text && index < otp.length - 1) {
       inputs.current[index + 1]?.focus();
     }
@@ -35,6 +51,23 @@ const VerifyOtp = () => {
 
   const handleResend = () => {
     setTimer(30);
+    setServerError(null);
+  };
+
+  const onConfirm = () => {
+    const otpCode = otp.join(""); 
+    if (!email) {
+      setServerError("Email is missing. Please sign up again.");
+      return;
+    }
+    setServerError(null);
+
+    mutate({email, otp: otpCode, }, {
+      onError: (error) => {
+        const msg = error.message 
+        setServerError(msg);
+      }
+    });
   };
 
   return (
@@ -47,6 +80,15 @@ const VerifyOtp = () => {
           We sent a 4-digit code to your email.
         </Text>      
       </View>
+
+      {/* Backend Error Message */}
+      {serverError && (
+        <View className="mt-6 mx-16 bg-red-500/10 p-3 rounded-lg border border-red-500">
+          <Text className="text-red-500 text-sm text-center font-sans-medium">
+            {serverError}
+          </Text>
+        </View>
+      )}
 
       {/* OTP Inputs Container */}
       <View className='flex-row items-center justify-between mt-10 mx-16'>
@@ -94,13 +136,18 @@ const VerifyOtp = () => {
       {/* Submit Button */}
       <View className='px-14 mt-10'>
         <TouchableOpacity 
+          onPress={onConfirm}
           activeOpacity={0.7}
-          disabled={otp.some(digit => digit === "")}
+          disabled={otp.some(digit => digit === "") || isPending}
           className={`p-4 rounded-full items-center ${
-            otp.some(digit => digit === "") ? 'bg-gray-700' : 'bg-primary'
+            otp.some(digit => digit === "") || isPending ? 'bg-gray-700' : 'bg-primary'
           }`}
         >
-          <Text className='text-black font-sans-bold text-lg'>Confirm</Text>
+          {isPending ? (
+            <ActivityIndicator color="black" />
+          ) : (
+            <Text className='text-black font-sans-bold text-lg'>Confirm</Text>
+          )}
         </TouchableOpacity>
       </View>
     </SafeAreaView>

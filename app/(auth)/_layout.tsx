@@ -7,7 +7,7 @@ export default function AuthLayout() {
         headerShown: false,
         animation: "slide_from_right",
         contentStyle: {
-          backgroundColor: "#000",
+          backgroundColor: "#000000",
         },
       }}
     />
