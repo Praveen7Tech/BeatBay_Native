@@ -1,19 +1,47 @@
 import { useMutation } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
-import { loginApi } from '../api/auth.api';
+import { loginApi, signUp, verifyOtp } from '../api/auth.api';
 import { useAuthStore } from "../store/useAuthStore";
 
 export const useLogin = () =>{
-    const setAuth = useAuthStore((state)=> state.setAuth)
+    const setUser = useAuthStore((state)=> state.setUser)
     return useMutation({
         mutationFn: loginApi,
         onSuccess: async(data)=>{
-            //await SecureStore.setItemAsync("accessToken", data.accessToken)
+            await SecureStore.setItemAsync("accessToken", data.accessToken)
             await SecureStore.setItemAsync("refreshToken", data.refreshToken)
-            setAuth({user: data.user,accessToken: data.accessToken})
-
+            setUser(data.user)
             router.replace("/(tabs)/home")
+        },
+        onError: (error)=>{
+            console.error("error in login", error)
+        }
+    })
+}
+
+
+export const useSignUp = () =>{
+    return useMutation({
+        mutationFn: signUp,
+        onSuccess: async(data,variables)=>{
+            router.replace({
+                pathname: "/(auth)/verifyotp",
+                params: { email: variables.email } 
+            });
+        },
+        onError: (error)=>{
+            console.error("error in login", error)
+        }
+    })
+}
+
+
+export const useVerifyOtp = () =>{
+    return useMutation({
+        mutationFn: verifyOtp,
+        onSuccess: async(data)=>{
+            router.replace("/(auth)/login")
         },
         onError: (error)=>{
             console.error("error in login", error)

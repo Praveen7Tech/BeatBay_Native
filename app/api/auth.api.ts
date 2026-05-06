@@ -12,19 +12,47 @@ export interface LoginResponse {
   refreshToken: string;
 }
 
+export interface SignupPayload{
+  name: string;
+  email: string;
+  password: string
+}
+
+
+interface VerifyOtpRequest {
+  email: string;
+  otp: string;
+}
+
+export interface VerifyOtpResponse {
+  message: string;
+}
+
 export const loginApi = async(data:LoginPayload): Promise<LoginResponse>=>{
-    console.log("api call start")
     const response = await api.post("/user/login", data);
     return response.data;
 }
 
 export const restoreSession = async () => {
   const refreshToken = await SecureStore.getItemAsync("refreshToken");
-
   if (!refreshToken) {
     throw new Error("No refresh token");
   }
-  const response = await api.post( "/user/auth-status",{refreshToken,});
+  const response = await api.post( "/user/refreshToken",{refreshToken});
   return response.data;
 };
 
+export const fetchUser = async()=>{
+  const response = await api.get("/user/fetchUser")
+  return response.data
+}
+
+export const signUp = async(data: SignupPayload)=>{
+  const response = await api.post("/user/signup",data)
+  return response.data
+}
+
+export const verifyOtp= async (data: VerifyOtpRequest): Promise<VerifyOtpResponse> => {
+    const response = await api.post<VerifyOtpResponse>("/user/verify-otp", data);
+    return response.data;
+}

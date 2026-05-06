@@ -1,35 +1,13 @@
 import "@/global.css";
 import { router } from "expo-router";
 import { styled } from "nativewind";
-import { useEffect } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-import { restoreSession } from "./api/auth.api";
 import { icons } from "./constants/icons";
-import { useAuthStore } from "./store/useAuthStore";
 
 const SafeAreaView = styled(RNSafeAreaView)
 
 export default function Index() {
-     const Auth = useAuthStore((state) => state);
-
-    useEffect(() => {
-        const checkAuth = async () => {
-            try {
-                const data = await restoreSession();
-
-                Auth.setAuth({user: data.user,accessToken: data.accessToken,});
-
-                router.replace("/(tabs)/home");
-            } catch (error) {
-                Auth.logout()
-                console.log("Error in restore session ", error)
-            }
-        };
-
-        checkAuth();
-    }, []);
-
   return (
       <SafeAreaView edges={["top"]} className="flex-1 bg-background px-6">
          <View className="flex-1 justify-between item-center py-16">
@@ -55,9 +33,6 @@ export default function Index() {
                     <Text className="text-white font-sans-bold">Log In</Text>
                 </Pressable>
 
-                <Pressable onPress={()=> router.push('/(tabs)/home')} className="w-full rounded-full border border-inputborder items-center py-4">
-                    <Text className="text-white font-sans-bold">verify otp</Text>
-                </Pressable>
             </View>
 
          </View>

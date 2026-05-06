@@ -1,6 +1,5 @@
 import axios from "axios";
 import * as SecureStore from 'expo-secure-store';
-import { useAuthStore } from "../store/useAuthStore";
 
 export const api = axios.create({
     baseURL: 'http://192.168.1.38:5000',
@@ -12,7 +11,7 @@ export const api = axios.create({
 
 
 api.interceptors.request.use(async(config)=>{
-    const accessToken = useAuthStore((state)=> state.accessToken)
+    const accessToken = await SecureStore.getItemAsync("accessToken")
     if(accessToken){
         config.headers.Authorization = `Bearer ${accessToken}`
     }
@@ -21,41 +20,68 @@ api.interceptors.request.use(async(config)=>{
 })
 
 
-api.interceptors.response.use((response)=> response,
+let isRefreshing = false
+let failedQueue: { resolve: (value: unknown) => void; reject: (reason?: any) => void; }[] = []
+
+const processQueue = (error:Error | null, token = null)=>{
+    failedQueue.forEach((prom)=>{
+        if(error) prom.reject(error);
+        else prom.resolve(token)
+    })
+
+    failedQueue = []
+}
+
+api.interceptors.response.use(
+    (response)=> response,
     async(error)=>{
         const originalRequest = error.config;
         console.log("error response : ", originalRequest.url)
 
         if(error.response?.status === 401 && !originalRequest._retry){
-           if(originalRequest.url.includes('/user/auth-status')){
-            console.log("refresh api again called need to logout")
-            return Promise.reject(error)
+           if(isRefreshing){
+            return new Promise((resolve,reject)=>{
+                failedQueue.push({resolve, reject})
+            }).then(token => {
+                originalRequest.headers.Authorization = `Bearer ${token}`
+                return api(originalRequest)
+            })
            }
 
            originalRequest._retry =  true;
+           isRefreshing = true
 
            try {
-                const currentRefreshToken = await SecureStore.getItemAsync("refreshToken")
-                const response =  await axios.post('/user/auth-status',{currentRefreshToken})
-                const {accessToken, refreshToken} = response.data;
+                const refreshToken = await SecureStore.getItemAsync("refreshToken")
+                const response =  await api.post('/user/refreshToken',{refreshToken})
+                
+                const newAccessToken = response.data.accessToken
+                const newRefreshToken = response.data.refreshToken
+                await SecureStore.setItemAsync("accessToken", newAccessToken)
 
-                if(response.data){
-                    //await SecureStore.setItem("accessToken", accessToken)
-                    await SecureStore.setItem("refreshToken", refreshToken)
-                    
-                    originalRequest.headers.Authorization = `Bearer ${accessToken}`
-                    return api(originalRequest)    
-                }else{
-                    console.log("logout")
-                    return Promise.reject(error)
+                if(newRefreshToken){
+                    await SecureStore.setItemAsync("refreshToken", newRefreshToken)                     
                 }
+
+                processQueue(null,newAccessToken)
+                originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                return api(originalRequest)
             
            } catch (error) {
+                processQueue(error as Error,null)
+
+                await SecureStore.deleteItemAsync("accessToken")
+                await SecureStore.deleteItemAsync("refreshToken")
                 console.log("Error in api response logout",error)
                 return Promise.reject(error)
+           }finally{
+                isRefreshing = false
            }
            
         }
-        return Promise.reject(error)
+
+        const errorMessage = error.response?.data?.message || "An unexpected error occurred";
+        const flattenedError = new Error(errorMessage);
+        return Promise.reject(flattenedError)
     }
 )
