@@ -1,3 +1,4 @@
+import { useResendOtp, useVerifyOtp } from '@/hooks/useAuth';
 import { useLocalSearchParams } from 'expo-router';
 import { styled } from 'nativewind';
 import React, { useEffect, useRef, useState } from 'react';
@@ -12,7 +13,6 @@ import {
   View
 } from 'react-native';
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-import { useVerifyOtp } from '../hooks/useAuth'; // Ensure this path is correct
 
 const SafeAreaView = styled(RNSafeAreaView);
 
@@ -20,20 +20,20 @@ const VerifyOtp = () => {
   const { email } = useLocalSearchParams<{ email: string }>()
   const [otp, setOtp] = useState<string[]>(new Array(4).fill(""));
   const [timer, setTimer] = useState<number>(30);
-  const [serverError, setServerError] = useState<string | null>(null); // State for backend errors
   
   const inputs = useRef<(TextInput | null)[]>([]);
-  const { mutate, isPending } = useVerifyOtp(); // Initialize mutation hook
+  const { mutate, isPending , error} = useVerifyOtp(); 
+  const { mutate:resendMutate, isPending:resendPending} = useResendOtp()
 
   useEffect(() => {
+    if(timer <= 0) return;
     const interval = setInterval(() => {
       setTimer(prev => (prev > 0 ? prev - 1 : 0));
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [timer]);
 
   const handleChange = (text: string, index: number) => {
-    setServerError(null); // Clear error when user types
     const newOtp = [...otp];
     newOtp[index] = text.slice(-1);
     setOtp(newOtp);
@@ -51,23 +51,17 @@ const VerifyOtp = () => {
 
   const handleResend = () => {
     setTimer(30);
-    setServerError(null);
+    resendMutate(email)
   };
-
+  let serverError = error?.message;
   const onConfirm = () => {
     const otpCode = otp.join(""); 
     if (!email) {
-      setServerError("Email is missing. Please sign up again.");
+      serverError ="Email is missing. Please sign up again."
       return;
     }
-    setServerError(null);
 
-    mutate({email, otp: otpCode, }, {
-      onError: (error) => {
-        const msg = error.message 
-        setServerError(msg);
-      }
-    });
+    mutate({email, otp: otpCode, },);
   };
 
   return (
@@ -143,7 +137,7 @@ const VerifyOtp = () => {
             otp.some(digit => digit === "") || isPending ? 'bg-gray-700' : 'bg-primary'
           }`}
         >
-          {isPending ? (
+          {isPending || resendPending ? (
             <ActivityIndicator color="black" />
           ) : (
             <Text className='text-black font-sans-bold text-lg'>Confirm</Text>

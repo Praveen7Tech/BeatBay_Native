@@ -1,11 +1,11 @@
+import LoadingScreen from "@/components/LoadingScreen";
+import useInitialAuth from "@/hooks/useInitialAuth";
 import { DarkTheme, ThemeProvider } from "@react-navigation/native";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { router, SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
-import LoadingScreen from "./components/LoadingScreen";
-import { useInitialAuth } from "./hooks/useInitialAuth";
-import { queryClient } from "./providers/QueryProvider";
-import { useAuthStore } from "./store/useAuthStore";
+import { queryClient } from "../providers/QueryProvider";
+import { useAuthStore } from "../store/useAuthStore";
 
 SplashScreen.preventAutoHideAsync();
 

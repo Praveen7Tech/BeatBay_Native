@@ -1,3 +1,6 @@
+import { icons } from "@/constants/icons";
+import { useLogin } from "@/hooks/useAuth";
+import { LoginFormData, loginSchema } from "@/validators/auth.schema";
 import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
@@ -5,7 +8,6 @@ import { styled } from "nativewind";
 import { Controller, useForm } from "react-hook-form";
 import {
   ActivityIndicator,
-  Alert,
   Image,
   KeyboardAvoidingView,
   Platform,
@@ -15,9 +17,6 @@ import {
   View
 } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-import { icons } from "../constants/icons";
-import { useLogin } from "../hooks/useAuth";
-import { LoginFormData, loginSchema } from "../validators/auth.schema";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
@@ -27,15 +26,11 @@ export default function Login() {
     defaultValues: { email: "", password: "" }
   });
 
-  const { mutate, isPending } = useLogin();
+  const { mutate, isPending, error } = useLogin();
+  //const {signIn:GoogleSignIn, isPending: googleSininPending} = useGoogleAuth()
 
   const onLoginSubmit = (data: LoginFormData) => {
-    mutate(data, {
-      onError: (error: any) => {
-        const errorMessage = error.message 
-        Alert.alert("Login Failed", errorMessage);
-      }
-    });
+    mutate(data);
   };
 
   return (
@@ -132,15 +127,21 @@ export default function Login() {
               </Text>
             </View>
 
-            <Pressable className="relative items-center justify-center border border-zinc-400 rounded-full py-4">
-              <Image
-                source={icons.google}
-                className="w-6 h-6 absolute left-5"
-                resizeMode="contain"
-              />
-              <Text className="text-white font-sans-bold">
-                Continue with Google
-              </Text>
+            <Pressable  className="relative items-center justify-center border border-zinc-400 rounded-full py-4">
+              {/* {googleSininPending ? (
+                <ActivityIndicator color="white"/>
+              ):( */}
+              <>
+                <Image
+                  source={icons.google}
+                  className="w-6 h-6 absolute left-5"
+                  resizeMode="contain"
+                />
+                <Text className="text-white font-sans-bold">
+                  Continue with Google
+                </Text>
+              </>
+              {/* )} */}
             </Pressable>
 
           </View>

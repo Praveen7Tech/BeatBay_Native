@@ -1,9 +1,9 @@
+import { icons } from "@/constants/icons";
 import "@/global.css";
 import { router } from "expo-router";
 import { styled } from "nativewind";
 import { Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-import { icons } from "./constants/icons";
 
 const SafeAreaView = styled(RNSafeAreaView)
 

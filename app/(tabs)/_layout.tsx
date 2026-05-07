@@ -1,5 +1,5 @@
+import { tabs } from "@/constants/data";
 import { Tabs } from "expo-router";
-import { tabs } from "../constants/data";
 
 export default function HomeLayout(){
     return(

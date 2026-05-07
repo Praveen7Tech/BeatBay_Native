@@ -1,10 +1,10 @@
+import { queryClient } from "@/providers/QueryProvider";
+import { useAuthStore } from "@/store/useAuthStore";
 import { router } from "expo-router";
 import { styled } from "nativewind";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-import { queryClient } from "../providers/QueryProvider";
-import { useAuthStore } from "../store/useAuthStore";
 
 const SafeAreaView = styled(RNSafeAreaView);
 

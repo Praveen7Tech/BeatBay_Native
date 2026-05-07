@@ -56,3 +56,13 @@ export const verifyOtp= async (data: VerifyOtpRequest): Promise<VerifyOtpRespons
     const response = await api.post<VerifyOtpResponse>("/user/verify-otp", data);
     return response.data;
 }
+
+export const resendOtp = async(email: string)=>{
+    const response = await api.post<VerifyOtpResponse>("/user/resend-otp", {email});
+    return response.data;
+}
+
+export const googleSignin = async(token: string)=>{
+    const response = await api.post("/user/google-signup", {token});
+    return response.data;
+}

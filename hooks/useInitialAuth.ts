@@ -1,20 +1,20 @@
+import { fetchUser, restoreSession } from "@/api/auth.api";
+import { useAuthStore } from "@/store/useAuthStore";
 import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import * as SecureStore from "expo-secure-store";
+import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
-import { useAuthStore } from "../store/useAuthStore";
-import { fetchUser, restoreSession } from "../api/auth.api";
 
-export const useInitialAuth = () => {
+const useInitialAuth = () => {
   const { setUser, logout, setInitialized, isInitialized } = useAuthStore();
 
   const [fontsLoaded] = useFonts({
-    "sans-regular": require("../../assets/fonts/PlusJakartaSans-Regular.ttf"),
-    "sans-bold": require("../../assets/fonts/PlusJakartaSans-Bold.ttf"),
-    "sans-medium": require("../../assets/fonts/PlusJakartaSans-Medium.ttf"),
-    "sans-semibold": require("../../assets/fonts/PlusJakartaSans-SemiBold.ttf"),
-    "sans-extrabold": require("../../assets/fonts/PlusJakartaSans-ExtraBold.ttf"),
-    "sans-light": require("../../assets/fonts/PlusJakartaSans-Light.ttf"),
+    "sans-regular": require("@/assets/fonts/PlusJakartaSans-Regular.ttf"),
+    "sans-bold": require("@/assets/fonts/PlusJakartaSans-Bold.ttf"),
+    "sans-medium": require("@/assets/fonts/PlusJakartaSans-Medium.ttf"),
+    "sans-semibold": require("@/assets/fonts/PlusJakartaSans-SemiBold.ttf"),
+    "sans-extrabold": require("@/assets/fonts/PlusJakartaSans-ExtraBold.ttf"),
+    "sans-light": require("@/assets/fonts/PlusJakartaSans-Light.ttf"),
   });
 
   useEffect(() => {
@@ -55,3 +55,6 @@ export const useInitialAuth = () => {
 
   return { isLoaded: fontsLoaded && isInitialized };
 };
+
+
+export default useInitialAuth;
