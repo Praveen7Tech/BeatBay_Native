@@ -1,8 +1,11 @@
+import { icons } from "@/constants/icons";
+import { useSignUp } from "@/hooks/useAuth";
+import { SignUpFormData, signupSchema } from "@/validators/auth.schema";
 import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { router } from "expo-router";
 import { styled } from "nativewind";
-import React, { useState } from "react";
+import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   ActivityIndicator,
@@ -15,15 +18,11 @@ import {
   View,
 } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-import { icons } from "../constants/icons";
-import { useSignUp } from "../hooks/useAuth";
-import { SignUpFormData, signupSchema } from "../validators/auth.schema";
 
 const SafeAreaView = styled(RNSafeAreaView);
 
 export default function SignUp() {
-  const [serverError, setServerError] = useState<string | null>(null);
-  const { mutate, isPending } = useSignUp();
+  const { mutate, isPending, error } = useSignUp();
 
   const {control, handleSubmit,formState: { errors },} = useForm<SignUpFormData>({
     resolver: zodResolver(signupSchema),
@@ -31,14 +30,10 @@ export default function SignUp() {
   });
 
   const HandleSignUp = (data: SignUpFormData) => {
-    setServerError(null);
-    mutate(data, {
-      onError: (error) => {
-        const errorMessage = error.message 
-        setServerError(errorMessage);
-      },
-    });
+    mutate(data);
   };
+
+  const serverError = error?.message
 
   return (
     <SafeAreaView className="flex-1 bg-background">

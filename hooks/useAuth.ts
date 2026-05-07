@@ -1,8 +1,9 @@
+import { loginApi, resendOtp, signUp, verifyOtp } from '@/api/auth.api';
+import { useAuthStore } from '@/store/useAuthStore';
 import { useMutation } from '@tanstack/react-query';
 import { router } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
-import { loginApi, signUp, verifyOtp } from '../api/auth.api';
-import { useAuthStore } from "../store/useAuthStore";
+import { Alert } from 'react-native';
 
 export const useLogin = () =>{
     const setUser = useAuthStore((state)=> state.setUser)
@@ -16,6 +17,7 @@ export const useLogin = () =>{
         },
         onError: (error)=>{
             console.error("error in login", error)
+            Alert.alert(error.message)
         }
     })
 }
@@ -42,6 +44,18 @@ export const useVerifyOtp = () =>{
         mutationFn: verifyOtp,
         onSuccess: async(data)=>{
             router.replace("/(auth)/login")
+        },
+        onError: (error)=>{
+            console.error("error in login", error)
+        }
+    })
+}
+
+export const useResendOtp = () =>{
+    return useMutation({
+        mutationFn: resendOtp,
+        onSuccess: async(data)=>{
+            Alert.alert(data.message)
         },
         onError: (error)=>{
             console.error("error in login", error)
