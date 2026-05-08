@@ -5,7 +5,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const HomeDrawerLayout = () => {
   return (
-    <GestureHandlerRootView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
         <Drawer 
             drawerContent={()=> <ProfileDrawer/>}
             screenOptions={{

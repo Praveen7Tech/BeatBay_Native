@@ -37,12 +37,15 @@ const Home = () => {
       >
         {/*category options  */}
         <View className="flex-row items-center px-4 pt-3 mb-4">
-          <Pressable onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-        <Image 
-          source={Users.avathar} 
-          className="w-10 h-10 rounded-full mr-3" 
-        />
-      </Pressable>
+          <Pressable onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+              accessibilityRole="button"
+              accessibilityLabel="Open profile drawer"
+            >
+            <Image 
+              source={Users.avathar} 
+              className="w-10 h-10 rounded-full mr-3" 
+            />
+          </Pressable>
           <View className=" flex-row items-center gap-2 ">
             {categories.map((item) => {
               const isActive = tab === item
@@ -68,7 +71,7 @@ const Home = () => {
         
           {/* songs and album list section */}
           <MediaSection
-            title="Songs feature&apos;d for you"
+            title="Songs feature'd for you"
             data={SongList}
           />
           <MediaSection
