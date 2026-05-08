@@ -6,11 +6,16 @@ import { router } from "expo-router";
 import * as SecureStore from 'expo-secure-store';
 import { Alert } from "react-native";
 
+const GOOGLE_WEB_CLIENT_ID = process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID;
+if (!GOOGLE_WEB_CLIENT_ID) {
+  throw new Error('EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID environment variable is required');
+}
+
 export const useGoogleAuth = ()=>{
     const setUser = useAuthStore((state)=> state.setUser)
 
     GoogleSignin.configure({
-        webClientId:process.env.EXPO_PUBLIC_GOOGLE_WEB_CLIENT_ID,
+        webClientId:GOOGLE_WEB_CLIENT_ID,
         offlineAccess: true
     })
 

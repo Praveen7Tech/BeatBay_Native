@@ -1,8 +1,13 @@
 import axios from "axios";
 import * as SecureStore from 'expo-secure-store';
 
+const API_URL = process.env.EXPO_PUBLIC_API_URL;
+if (!API_URL) {
+  throw new Error('EXPO_PUBLIC_API_URL environment variable is required');
+}
+
 export const api = axios.create({
-    baseURL: process.env.EXPO_PUBLIC_API_URL,
+    baseURL: API_URL,
     headers:{
         'x-client-type': "mobile",
         'Content-Type': 'application/json'
