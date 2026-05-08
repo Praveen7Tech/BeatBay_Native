@@ -1,40 +1,27 @@
-import { tabs } from "@/constants/data";
-import { Tabs } from "expo-router";
+import ProfileDrawer from "@/components/Drawer";
+import { Drawer } from "expo-router/drawer";
+import React from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export default function HomeLayout(){
-    return(
-        <Tabs screenOptions={{
-            headerShown:false,
-            tabBarActiveTintColor: "#FFFFFF",
-            tabBarInactiveTintColor:"#B3B3B3",
-            tabBarStyle:{
-                backgroundColor: "rgba(0, 0, 0, 0.85)",
-                position: "absolute", //allow content to scroll behind bar
-                borderTopWidth:0,
-                elevation:0,
-            },
-            tabBarLabelStyle:{
-                fontFamily: "sans-semibold"
-            }
-        }}>
-           {tabs.map((tab)=>(
-            <Tabs.Screen 
-                key={tab.name}
-                name={tab.name}
-                options={{
-                    title: tab.title,
-                    tabBarIcon: ({color, focused})=> (
-                        <tab.icon 
-                            size={26} 
-                            strokeWidth={focused ? 2.5 : 2} 
-                            color={color}
-                            //fill={focused ? color : "none"}
-                        />
-                    )
-                }}
+const HomeDrawerLayout = () => {
+  return (
+    <GestureHandlerRootView>
+        <Drawer 
+            drawerContent={()=> <ProfileDrawer/>}
+            screenOptions={{
+                headerShown:false,
+                drawerType:"slide",
+                drawerStyle:{width:"90%", },
+                overlayColor: "rgba(0,0,0,0.7)"
+            }}
+        >
+            <Drawer.Screen 
+                name="(home)" 
+                options={{drawerLabel:"Home"}}
             />
-           ))}
-            
-        </Tabs>
-    )
+        </Drawer>
+    </GestureHandlerRootView>
+  )
 }
+
+export default HomeDrawerLayout
