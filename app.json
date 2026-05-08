@@ -1,17 +1,19 @@
 {
   "expo": {
-    "name": "BEATBAY_NATIVE",
-    "slug": "BEATBAY_NATIVE",
+    "name": "Beat",
+    "slug": "BeatBay",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icons/logo.png",
-    "scheme": "beatbaynative",
+    "scheme": "com.praveen.beatbay",
     "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.praveen.beatbay"
     },
     "android": {
+      "package": "com.praveen.beatbay",
       "adaptiveIcon": {
         "backgroundColor": "#000000",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -52,7 +54,13 @@
           ]
         }
       ],
-      "expo-secure-store"
+      "expo-secure-store",
+      [
+          "@react-native-google-signin/google-signin",
+        {
+            "iosUrlScheme": "com.googleusercontent.apps.<your-ios-client-id>"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

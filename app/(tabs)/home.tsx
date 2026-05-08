@@ -19,7 +19,7 @@ const Home = () => {
 
       queryClient.clear()
     } catch (error) {
-      console.error("error in logout ",error)
+      console.log("error in logout ",error)
     }
   }
   return (

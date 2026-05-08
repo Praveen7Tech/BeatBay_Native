@@ -40,7 +40,7 @@ const useInitialAuth = () => {
           }
         }
       } catch (error) {
-        console.error("Initial Auth Error:", error);
+        console.log("Initial Auth Error:", error);
         await logout();
       } finally {
         if (fontsLoaded) {
