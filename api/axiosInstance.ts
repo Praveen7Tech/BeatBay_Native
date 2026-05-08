@@ -2,7 +2,7 @@ import axios from "axios";
 import * as SecureStore from 'expo-secure-store';
 
 export const api = axios.create({
-    baseURL: 'http://192.168.1.38:5000',
+    baseURL: process.env.EXPO_PUBLIC_API_URL,
     headers:{
         'x-client-type': "mobile",
         'Content-Type': 'application/json'

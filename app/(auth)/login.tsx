@@ -1,5 +1,6 @@
 import { icons } from "@/constants/icons";
 import { useLogin } from "@/hooks/useAuth";
+import { useGoogleAuth } from "@/hooks/useGoogleAuth";
 import { LoginFormData, loginSchema } from "@/validators/auth.schema";
 import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,8 +27,8 @@ export default function Login() {
     defaultValues: { email: "", password: "" }
   });
 
-  const { mutate, isPending, error } = useLogin();
-  //const {signIn:GoogleSignIn, isPending: googleSininPending} = useGoogleAuth()
+  const { mutate, isPending } = useLogin();
+  const {signIn:GoogleSignIn, isPending: googleSininPending} = useGoogleAuth()
 
   const onLoginSubmit = (data: LoginFormData) => {
     mutate(data);
@@ -127,10 +128,10 @@ export default function Login() {
               </Text>
             </View>
 
-            <Pressable  className="relative items-center justify-center border border-zinc-400 rounded-full py-4">
-              {/* {googleSininPending ? (
+            <Pressable  onPress={GoogleSignIn} className="relative items-center justify-center border border-zinc-400 rounded-full py-4">
+              {googleSininPending ? (
                 <ActivityIndicator color="white"/>
-              ):( */}
+              ):(
               <>
                 <Image
                   source={icons.google}
@@ -141,7 +142,7 @@ export default function Login() {
                   Continue with Google
                 </Text>
               </>
-              {/* )} */}
+               )}
             </Pressable>
 
           </View>

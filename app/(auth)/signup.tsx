@@ -1,5 +1,6 @@
 import { icons } from "@/constants/icons";
 import { useSignUp } from "@/hooks/useAuth";
+import { useGoogleAuth } from "@/hooks/useGoogleAuth";
 import { SignUpFormData, signupSchema } from "@/validators/auth.schema";
 import { Ionicons } from "@expo/vector-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -23,6 +24,7 @@ const SafeAreaView = styled(RNSafeAreaView);
 
 export default function SignUp() {
   const { mutate, isPending, error } = useSignUp();
+  const {signIn:GoogleSignIn, isPending: googleSininPending} = useGoogleAuth()
 
   const {control, handleSubmit,formState: { errors },} = useForm<SignUpFormData>({
     resolver: zodResolver(signupSchema),
@@ -172,16 +174,21 @@ export default function SignUp() {
               <Text className="text-white font-medium">Or sign up with</Text>
             </View>
 
-            <Pressable className="relative items-center justify-center border border-zinc-400 rounded-full py-4">
-              <Image
-                source={icons.google}
-                className="w-6 h-6 absolute left-5"
-                resizeMode="contain"
-              />
-
-              <Text className="text-white font-sans-bold">
-                Continue with Google
-              </Text>
+             <Pressable  onPress={GoogleSignIn} className="relative items-center justify-center border border-zinc-400 rounded-full py-4">
+              {googleSininPending ? (
+                <ActivityIndicator color="white"/>
+              ):(
+              <>
+                <Image
+                  source={icons.google}
+                  className="w-6 h-6 absolute left-5"
+                  resizeMode="contain"
+                />
+                <Text className="text-white font-sans-bold">
+                  Continue with Google
+                </Text>
+              </>
+               )}
             </Pressable>
           </View>
 

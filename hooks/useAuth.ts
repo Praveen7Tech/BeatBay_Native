@@ -16,7 +16,7 @@ export const useLogin = () =>{
             router.replace("/(tabs)/home")
         },
         onError: (error)=>{
-            console.error("error in login", error)
+            console.log("error in login", error)
             Alert.alert(error.message)
         }
     })
@@ -33,7 +33,7 @@ export const useSignUp = () =>{
             });
         },
         onError: (error)=>{
-            console.error("error in login", error)
+            console.log("error in login", error)
         }
     })
 }
@@ -46,7 +46,7 @@ export const useVerifyOtp = () =>{
             router.replace("/(auth)/login")
         },
         onError: (error)=>{
-            console.error("error in login", error)
+            console.log("error in login", error)
         }
     })
 }
@@ -58,7 +58,7 @@ export const useResendOtp = () =>{
             Alert.alert(data.message)
         },
         onError: (error)=>{
-            console.error("error in login", error)
+            console.log("error in login", error)
         }
     })
 }
