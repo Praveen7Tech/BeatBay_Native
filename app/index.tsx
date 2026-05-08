@@ -32,7 +32,6 @@ export default function Index() {
                 <Pressable onPress={()=> router.push('/login')} className="w-full rounded-full border border-inputborder items-center py-4">
                     <Text className="text-white font-sans-bold">Log In</Text>
                 </Pressable>
-
             </View>
 
          </View>
