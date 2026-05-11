@@ -19,7 +19,7 @@ const MiniPlayer = () => {
         <View className='flex-row items-center gap-5 px-3'>
             <Heart color={'white'} size={20}/>
             <Pressable>
-                {playing ? <Play color='white' fill='white' size={20}/> : <Pause size={20} color={'white'} fill="white"/>}
+                {playing ? <Pause size={20} color={'white'} fill="white"/> : <Play color='white' fill='white' size={20}/>}
             </Pressable>
         </View>
 
