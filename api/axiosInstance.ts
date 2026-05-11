@@ -1,4 +1,4 @@
-import axios from "axios";
+import { create } from "axios";
 import * as SecureStore from 'expo-secure-store';
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -6,7 +6,7 @@ if (!API_URL) {
   throw new Error('EXPO_PUBLIC_API_URL environment variable is required');
 }
 
-export const api = axios.create({
+export const api = create({
     baseURL: API_URL,
     headers:{
         'x-client-type': "mobile",
@@ -42,6 +42,12 @@ api.interceptors.response.use(
     async(error)=>{
         const originalRequest = error.config;
         console.log("error response : ", originalRequest.url)
+         console.log("AXIOS ERROR:");
+    console.log("message:", error.message);
+    console.log("response:", error.response?.data);
+    console.log("status:", error.response?.status);
+    console.log("headers:", error.response?.headers);
+    console.log("request:", error.request);
 
         if(error.response?.status === 401 && !originalRequest._retry){
            if(isRefreshing){

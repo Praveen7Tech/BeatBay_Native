@@ -13,10 +13,10 @@ export const useLogin = () =>{
             await SecureStore.setItemAsync("accessToken", data.accessToken)
             await SecureStore.setItemAsync("refreshToken", data.refreshToken)
             setUser(data.user)
-            router.replace("/(tabs)/home")
+            router.replace("/(tabs)/(home)/home")
         },
         onError: (error)=>{
-            console.log("error in login", error)
+            console.error("error in login", error)
             Alert.alert(error.message)
         }
     })

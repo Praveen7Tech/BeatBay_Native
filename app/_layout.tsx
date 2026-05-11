@@ -43,6 +43,13 @@ export default function RootLayout() {
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="player/[id]" 
+                              options={{
+                                presentation:"modal",
+                                headerShown:false,
+                                animation: "slide_from_bottom",
+                                gestureEnabled:true
+                              }}/>
         </Stack>
       </ThemeProvider>
     </QueryClientProvider>

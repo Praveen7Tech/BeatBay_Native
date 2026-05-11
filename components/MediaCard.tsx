@@ -2,9 +2,9 @@
 import React from 'react'
 import { FlatList, Image, Pressable, Text, View } from 'react-native'
 
-const MediaCard = ({ song }: { song: SongProps }) => {
+const MediaCard = ({ song,onPress }: { song: SongProps, onPress:()=> void }) => {
     return (
-        <Pressable key={song.title} className="mr-4 w-43">
+        <Pressable onPress={onPress} key={song.title} className="mr-4 w-43">
             <Image source={song.image} className="w-43 h-43 rounded-lg" />
             <View className="ml-2">
                 <Text numberOfLines={1}
@@ -20,7 +20,7 @@ const MediaCard = ({ song }: { song: SongProps }) => {
     )
 }
 
-export const MediaSection = ({title, data}:MediaSectionProps) => {
+export const MediaSection = ({title, data, OnItemPress}:MediaSectionProps) => {
     return (
         <View className="mt-6">
             <Text className="text-white  text-2xl font-sans-extrabold mb-4 pl-5">
@@ -31,7 +31,7 @@ export const MediaSection = ({title, data}:MediaSectionProps) => {
                data={data}
                horizontal
                keyExtractor={(item)=> item.title.toString()}
-               renderItem={({item})=> <MediaCard song={item}/>}
+               renderItem={({item})=> <MediaCard song={item} onPress={()=> OnItemPress(item)}/>}
                showsHorizontalScrollIndicator={false}
                initialNumToRender={1}
                contentContainerStyle={{

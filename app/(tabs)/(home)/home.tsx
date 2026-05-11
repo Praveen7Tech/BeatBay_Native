@@ -1,8 +1,6 @@
 import { MediaSection } from "@/components/MediaCard";
 import { navOptions, SongList } from "@/constants/data";
 import { Users } from "@/constants/icons";
-import { queryClient } from "@/providers/QueryProvider";
-import { useAuthStore } from "@/store/useAuthStore";
 import { DrawerActions } from '@react-navigation/native';
 import { router, useNavigation } from "expo-router";
 import { styled } from "nativewind";
@@ -15,20 +13,15 @@ const categories = ["All", "Music", "Album"]
 
 const Home = () => {
   const navigation = useNavigation();
-  const LogOut = useAuthStore((state) => state.logout)
   const [tab, setTab] = useState("All")
 
-  const HandleLogout = async () => {
-    try {
-      LogOut()
-
-      router.replace("/")
-
-      queryClient.clear()
-    } catch (error) {
-      console.log("error in logout ", error)
-    }
+  const HandleSongPress = (song: any)=>{
+    router.push({
+      pathname:"/player/[id]",
+      params:{song}
+    })
   }
+
   return (
     <SafeAreaView className="flex-1 bg-background">
       <ScrollView 
@@ -73,6 +66,7 @@ const Home = () => {
           <MediaSection
             title="Songs feature'd for you"
             data={SongList}
+            OnItemPress={HandleSongPress}
           />
           <MediaSection
             title=" Albums featuring songs you like"

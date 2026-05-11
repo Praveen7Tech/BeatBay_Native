@@ -8,6 +8,7 @@ declare global{
     interface MediaSectionProps{
         title: string
         data: SongProps[]
+        OnItemPress:(item:SongProps)=> void
     }
 }
 
