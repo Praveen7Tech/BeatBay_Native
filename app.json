@@ -16,7 +16,7 @@
       "package": "com.praveen.beatbay",
       "adaptiveIcon": {
         "backgroundColor": "#000000",
-        "foregroundImage": "./assets/images/app/icon-foreground.png",
+        "foregroundImage": "./assets/images/app/app-logo.png",
         "backgroundImage": "./assets/images/app/icon-background.png",
         "monochromeImage": "./assets/images/app/app-logo.png"
       },
@@ -32,7 +32,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-screen.png",
+          "image": "./assets/images/app/splash-screen.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#000000",
