@@ -9,6 +9,7 @@ const MiniPlayer = () => {
     const playing = false
     const trackId = "123"
     const bgColor = useImageColor(songs.song3, '#282828');
+    if(!playing) return null;
   return (
     <Pressable onPress={()=> router.push(`/player/${trackId}`)} className='absolute bottom-16 left-5 right-5 h-16 rounded-md flex-row items-center px-2' style={{backgroundColor: bgColor }}>
         <Image source={songs.song1} className='w-12 h-12 rounded-md'/>
