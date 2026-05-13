@@ -10,7 +10,21 @@ declare global{
         data: SongProps[]
         OnItemPress:(item:SongProps)=> void
     }
-}
 
+    type Member = {
+        id: string
+        name: string
+        image: any
+        role: string
+    }
+
+    type PlayList={
+        id: string
+        title: string
+        artist: string
+        duration: string
+        image: any
+    }
+}
 export { }
 
