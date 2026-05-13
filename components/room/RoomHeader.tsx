@@ -10,7 +10,7 @@ interface RoomHeaderProps {
 
 const RoomHeader = ({ title, subtitle }: RoomHeaderProps) => {
   return (
-    <View className='bg-background/90  px-4 pt-5 pb-3 z-10'>
+    <View className='bg-black/90 px-4 pt-5 pb-3 z-10'>
       <View className='flex-row items-center justify-between'>
         <Pressable
           className='p-2 rounded-full bg-zinc-900/70'

@@ -1,14 +1,30 @@
 import { playlist } from '@/constants/data'
 import { Ionicons } from '@expo/vector-icons'
-import React from 'react'
-import { Pressable, Text, View } from 'react-native'
+import React, { useCallback, useState } from 'react'
+import { ListRenderItem, Pressable, Text, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
-import PlayListRaw from './PlayListRaw'
+
+import PlayListRaw from '../raw/PlayListRaw'
 
 const PlayListCrad = () => {
+    const [expandId, setExpandId] = useState<string | null>(null)
+
+    const toggleExpand = useCallback((id: string) => {
+        setExpandId((prev) => prev === id ? null : id)
+    }, [])
+
+    const renderItem: ListRenderItem<PlayList> = useCallback(({ item, index }) => (
+        <PlayListRaw
+            key={item.id}
+            item={item}
+            index={index}
+            expanded={expandId === item.id}
+            onExpand={toggleExpand}
+        />
+    ), [expandId,toggleExpand])
     console.log("palylist card rendered")
     return (
-        <View className='bg-zinc-900 border border-zinc-800 rounded-2xl p-3 min-h-0 h-full'>
+        <View className='bg-zinc-900 border border-zinc-800 rounded-2xl py-3 px-1 min-h-0 h-full'>
             <View className='flex-row justify-between items-center mb-4'>
                 <View className='flex-row items-center gap-2'>
                     <Ionicons name='musical-notes' size={18} color="#1DB954" />
@@ -33,9 +49,7 @@ const PlayListCrad = () => {
                 initialNumToRender={5}
                 maxToRenderPerBatch={5}
                 windowSize={5}
-                renderItem={({ item, index }) => (
-                    <PlayListRaw item={item} index={index} />
-                )}
+                renderItem={renderItem}
                 style={{ flex: 1 }}
             />
         </View>
