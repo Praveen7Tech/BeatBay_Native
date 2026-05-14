@@ -1,4 +1,4 @@
-import { MediaSection } from "@/components/MediaCard";
+import { MediaSection } from "@/components/dashboard/MediaCard";
 import { navOptions, SongList } from "@/constants/data";
 import { Users } from "@/constants/icons";
 import { DrawerActions } from '@react-navigation/native';

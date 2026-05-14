@@ -1,5 +1,6 @@
 declare global{
     interface SongProps{
+        id: string
         title: string
         image: any
         artist: string
@@ -24,6 +25,18 @@ declare global{
         artist: string
         duration: string
         image: any
+    }
+
+     interface Friend {
+      id: string
+      name: string
+      image: any
+      status: 'online' | 'offline'
+    }
+
+    interface SongCrad{
+        id: string;
+        title: string
     }
 }
 export { }

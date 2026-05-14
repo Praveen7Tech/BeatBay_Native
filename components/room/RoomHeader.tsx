@@ -6,14 +6,16 @@ import { Pressable, Text, View } from 'react-native'
 interface RoomHeaderProps {
   title: string
   subtitle: string
+  setInvite: ()=> void
 }
 
-const RoomHeader = ({ title, subtitle }: RoomHeaderProps) => {
+const RoomHeader = ({ title, subtitle , setInvite}: RoomHeaderProps) => {
+  
   return (
-    <View className='bg-black/90 px-4 pt-5 pb-3 z-10'>
+    <View className='bg-black/90 px-4 pt-5 pb-3 z-0'>
       <View className='flex-row items-center justify-between'>
         <Pressable
-          className='p-2 rounded-full bg-zinc-900/70'
+          className='p-2 rounded-full'
           onPress={() => router.back()}
           accessibilityLabel='Go back'
         >
@@ -25,11 +27,11 @@ const RoomHeader = ({ title, subtitle }: RoomHeaderProps) => {
           <Text className='text-zinc-400 text-xs'>{subtitle}</Text>
         </View>
 
-        <Pressable
-          className='p-2 rounded-full bg-zinc-900/70'
+        <Pressable onPress={setInvite}
+          className='p-2 rounded-full'
           accessibilityLabel='Room actions'
         >
-          <Ionicons name='ellipsis-vertical' size={24} color='white' />
+          <Ionicons name='person-add' size={24} color='white' />
         </Pressable>
       </View>
     </View>

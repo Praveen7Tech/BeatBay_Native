@@ -1,4 +1,4 @@
-import MiniPlayer from "@/components/MiniPlayer";
+import MiniPlayer from "@/components/player/MiniPlayer";
 import { tabs } from "@/constants/data";
 import { Tabs } from "expo-router";
 import { View } from "react-native";

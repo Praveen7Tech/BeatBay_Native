@@ -5,8 +5,11 @@ import { ListRenderItem, Pressable, Text, View } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 
 import PlayListRaw from '../raw/PlayListRaw'
+interface Props{
+    onAddSong: ()=> void
+}
 
-const PlayListCrad = () => {
+const PlayListCrad = ({onAddSong}: Props) => {
     const [expandId, setExpandId] = useState<string | null>(null)
 
     const toggleExpand = useCallback((id: string) => {
@@ -32,7 +35,7 @@ const PlayListCrad = () => {
                         Playlist
                     </Text>
                 </View>
-                <Pressable className='bg-primary px-3 py-2 rounded-full flex-row items-center gap-1'>
+                <Pressable onPress={onAddSong} className='bg-primary px-3 py-2 rounded-full flex-row items-center gap-1'>
                     <Ionicons name='add' size={16} color="black" />
                     <Text className='text-black text-xs font-sans-bold'>
                         Add Song

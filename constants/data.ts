@@ -190,3 +190,96 @@ export const members = [
 ];
 
 
+export const friends = [
+  {
+    id: '1',
+    name: 'Arjun',
+    status: 'online',
+    image: Users.avathar,
+  },
+  {
+    id: '2',
+    name: 'Rahul',
+    status: 'online',
+    image: Users.avathar,
+  },
+  {
+    id: '3',
+    name: 'Sneha',
+    status: 'offline',
+    image: Users.avathar,
+  },
+  {
+    id: '4',
+    name: 'Vishnu',
+    status: 'online',
+    image: Users.avathar,
+  },
+  {
+    id: '5',
+    name: 'Anu',
+    status: 'offline',
+    image: Users.avathar,
+  },
+  {
+    id: '6',
+    name: 'Karthik',
+    status: 'online',
+    image: Users.avathar,
+  },
+  {
+    id: '7',
+    name: 'Meera',
+    status: 'offline',
+    image: Users.avathar,
+  },
+  {
+    id: '8',
+    name: 'Deepak',
+    status: 'online',
+    image: Users.avathar,
+  },
+  {
+    id: '9',
+    name: 'Athira',
+    status: 'offline',
+    image: Users.avathar,
+  },
+  {
+    id: '10',
+    name: 'Adithya',
+    status: 'online',
+    image: Users.avathar,
+  },
+  {
+    id: '11',
+    name: 'Nandhu',
+    status: 'offline',
+    image: Users.avathar,
+  },
+  {
+    id: '12',
+    name: 'Sanjay',
+    status: 'online',
+    image: Users.avathar,
+  },
+  {
+    id: '13',
+    name: 'Akhil',
+    status: 'offline',
+    image: Users.avathar,
+  },
+  {
+    id: '14',
+    name: 'Neha',
+    status: 'online',
+    image: Users.avathar,
+  },
+  {
+    id: '15',
+    name: 'Keerthana',
+    status: 'offline',
+    image: Users.avathar,
+  },
+]
+
