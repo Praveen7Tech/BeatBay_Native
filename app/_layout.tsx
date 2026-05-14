@@ -1,4 +1,4 @@
-import LoadingScreen from "@/components/LoadingScreen";
+import LoadingScreen from "@/components/loading/LoadingScreen";
 import useInitialAuth from "@/hooks/useInitialAuth";
 import { DarkTheme, ThemeProvider } from "@react-navigation/native";
 import { QueryClientProvider } from "@tanstack/react-query";

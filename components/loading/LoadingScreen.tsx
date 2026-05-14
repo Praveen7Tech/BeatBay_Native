@@ -1,6 +1,6 @@
 import React from "react";
-import { ActivityIndicator, View, Image } from "react-native";
-import { icons } from "../constants/icons";
+import { ActivityIndicator, Image, View } from "react-native";
+import { icons } from "../../constants/icons";
 
 export default function LoadingScreen() {
   return (
