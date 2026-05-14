@@ -16,7 +16,6 @@ const PlaylistSection = ({ onAddSong }: PlaylistSectionProps) => {
   const renderItem = useCallback<ListRenderItem<PlayList>>(
     ({ item, index }) => (
       <PlaylistItem
-        key={item.id}
         item={item}
         index={index}
         expanded={expandedId === item.id}
