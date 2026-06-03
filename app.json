@@ -56,15 +56,22 @@
       ],
       "expo-secure-store",
       [
-          "@react-native-google-signin/google-signin",
+        "@react-native-google-signin/google-signin",
         {
-            "iosUrlScheme": "com.googleusercontent.apps.<your-ios-client-id>"
+          "iosUrlScheme": "com.googleusercontent.apps.<your-ios-client-id>"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "7bb87dfd-a61a-4286-945b-ea106849c9cf"
+      }
+    },
+    "owner": "praveen.dev.js"
   }
 }
